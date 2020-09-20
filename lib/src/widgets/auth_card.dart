@@ -351,9 +351,11 @@ class _LoginCardState extends State<_LoginCard> with TickerProviderStateMixin {
   final GlobalKey<FormState> _formKey = GlobalKey();
 
   final _passwordFocusNode = FocusNode();
+  final _usernameFocusNode = FocusNode();
   final _confirmPasswordFocusNode = FocusNode();
 
   TextEditingController _nameController;
+  TextEditingController _usernameController;
   TextEditingController _passController;
   TextEditingController _confirmPassController;
 
@@ -368,6 +370,7 @@ class _LoginCardState extends State<_LoginCard> with TickerProviderStateMixin {
   AnimationController _submitController;
 
   Interval _nameTextFieldLoadingAnimationInterval;
+  Interval _usernameTextFieldLoadingAnimationInterval;
   Interval _passTextFieldLoadingAnimationInterval;
   Interval _textButtonLoadingAnimationInterval;
   Animation<double> _buttonScaleAnimation;
@@ -380,6 +383,7 @@ class _LoginCardState extends State<_LoginCard> with TickerProviderStateMixin {
 
     final auth = Provider.of<Auth>(context, listen: false);
     _nameController = TextEditingController(text: auth.email);
+    _usernameController = TextEditingController(text: auth.username);
     _passController = TextEditingController(text: auth.password);
     _confirmPassController = TextEditingController(text: auth.confirmPassword);
 
@@ -406,7 +410,8 @@ class _LoginCardState extends State<_LoginCard> with TickerProviderStateMixin {
     );
 
     _nameTextFieldLoadingAnimationInterval = const Interval(0, .85);
-    _passTextFieldLoadingAnimationInterval = const Interval(.15, 1.0);
+    _usernameTextFieldLoadingAnimationInterval = const Interval(0, 1.0);
+    _passTextFieldLoadingAnimationInterval = const Interval(.15, 1.15);
     _textButtonLoadingAnimationInterval =
         const Interval(.6, 1.0, curve: Curves.easeOut);
     _buttonScaleAnimation =
@@ -430,6 +435,7 @@ class _LoginCardState extends State<_LoginCard> with TickerProviderStateMixin {
     super.dispose();
 
     _loadingController?.removeStatusListener(handleLoadingAnimationStatus);
+    _usernameFocusNode.dispose();
     _passwordFocusNode.dispose();
     _confirmPasswordFocusNode.dispose();
 
@@ -468,11 +474,13 @@ class _LoginCardState extends State<_LoginCard> with TickerProviderStateMixin {
     if (auth.isLogin) {
       error = await auth.onLogin(LoginData(
         name: auth.email,
+        username: auth.username,
         password: auth.password,
       ));
     } else {
       error = await auth.onSignup(LoginData(
         name: auth.email,
+        username: auth.username,
         password: auth.password,
       ));
     }
@@ -505,9 +513,28 @@ class _LoginCardState extends State<_LoginCard> with TickerProviderStateMixin {
       width: width,
       loadingController: _loadingController,
       interval: _nameTextFieldLoadingAnimationInterval,
-      labelText: messages.usernameHint,
+      labelText: messages.nameHint,
       prefixIcon: Icon(FontAwesomeIcons.solidUserCircle),
       keyboardType: TextInputType.emailAddress,
+      textInputAction: TextInputAction.next,
+      onFieldSubmitted: (value) {
+        FocusScope.of(context).requestFocus(_usernameFocusNode);
+      },
+      validator: widget.emailValidator,
+      onSaved: (value) => auth.email = value,
+    );
+  }
+
+  Widget _buildUserNameField(double width, LoginMessages messages, Auth auth) {
+    return AnimatedTextFormField(
+      controller: _usernameController,
+      width: width,
+      loadingController: _loadingController,
+      focusNode: _usernameFocusNode,
+      interval: _usernameTextFieldLoadingAnimationInterval,
+      labelText: messages.usernameHint,
+      prefixIcon: Icon(FontAwesomeIcons.solidUserCircle),
+      keyboardType: TextInputType.text,
       textInputAction: TextInputAction.next,
       onFieldSubmitted: (value) {
         FocusScope.of(context).requestFocus(_passwordFocusNode);
@@ -642,6 +669,8 @@ class _LoginCardState extends State<_LoginCard> with TickerProviderStateMixin {
               children: <Widget>[
                 _buildNameField(textFieldWidth, messages, auth),
                 SizedBox(height: 20),
+                _buildUserNameField(textFieldWidth, messages, auth),
+                SizedBox(height: 20),
                 _buildPasswordField(textFieldWidth, messages, auth),
                 SizedBox(height: 10),
               ],
@@ -759,7 +788,7 @@ class _RecoverCardState extends State<_RecoverCard>
     return AnimatedTextFormField(
       controller: _nameController,
       width: width,
-      labelText: messages.usernameHint,
+      labelText: messages.nameHint,
       prefixIcon: Icon(FontAwesomeIcons.solidUserCircle),
       keyboardType: TextInputType.emailAddress,
       textInputAction: TextInputAction.done,
