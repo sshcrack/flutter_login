@@ -409,8 +409,8 @@ class _LoginCardState extends State<_LoginCard> with TickerProviderStateMixin {
       duration: Duration(milliseconds: 1000),
     );
 
-    _nameTextFieldLoadingAnimationInterval = const Interval(0, .85);
-    _usernameTextFieldLoadingAnimationInterval = const Interval(.1, .85);
+    _nameTextFieldLoadingAnimationInterval = const Interval(0, .70);
+    _usernameTextFieldLoadingAnimationInterval = const Interval(0, .85);
     _passTextFieldLoadingAnimationInterval = const Interval(.15, 1.0);
     _textButtonLoadingAnimationInterval =
         const Interval(.6, 1.0, curve: Curves.easeOut);
