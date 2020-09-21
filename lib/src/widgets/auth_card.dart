@@ -684,6 +684,8 @@ class _LoginCardState extends State<_LoginCard> with TickerProviderStateMixin {
                 _buildUserNameField(textFieldWidth, messages, auth),
                 SizedBox(height: 20),
                 _buildPasswordField(textFieldWidth, messages, auth),
+                _buildNoteField(textFieldWidth, messages),
+                SizedBox(height: 10)
               ],
             ),
           ),
@@ -708,7 +710,6 @@ class _LoginCardState extends State<_LoginCard> with TickerProviderStateMixin {
             width: cardWidth,
             child: Column(
               children: <Widget>[
-                _buildNoteField(textFieldWidth, messages),
                 _buildForgotPassword(theme, messages),
                 _buildSubmitButton(theme, messages, auth),
                 _buildSwitchAuthButton(theme, messages, auth),
