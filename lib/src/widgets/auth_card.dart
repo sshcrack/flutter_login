@@ -566,6 +566,19 @@ class _LoginCardState extends State<_LoginCard> with TickerProviderStateMixin {
     );
   }
 
+  Widget _buildNoteField(double width, LoginMessages messages) {
+    if(messages.note != null) {
+      return Column(
+        children: [
+          SizedBox(height: 10),
+          messages.note
+        ]
+      );
+    }
+
+    return null;
+  }
+
   Widget _buildConfirmPasswordField(double width, LoginMessages messages, Auth auth) {
     return AnimatedPasswordTextFormField(
       animatedWidth: width,
@@ -671,7 +684,8 @@ class _LoginCardState extends State<_LoginCard> with TickerProviderStateMixin {
                 _buildUserNameField(textFieldWidth, messages, auth),
                 SizedBox(height: 20),
                 _buildPasswordField(textFieldWidth, messages, auth),
-                SizedBox(height: 10),
+                _buildNoteField(textFieldWidth, messages),
+                SizedBox(height: 10)
               ],
             ),
           ),
