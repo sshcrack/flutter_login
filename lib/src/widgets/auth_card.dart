@@ -539,8 +539,7 @@ class _LoginCardState extends State<_LoginCard> with TickerProviderStateMixin {
       onFieldSubmitted: (value) {
         FocusScope.of(context).requestFocus(_passwordFocusNode);
       },
-      validator: widget.emailValidator,
-      onSaved: (value) => auth.email = value,
+      onSaved: (value) => auth.username = value,
     );
   }
 
