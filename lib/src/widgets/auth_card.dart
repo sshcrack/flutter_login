@@ -693,7 +693,7 @@ class _LoginCardState extends State<_LoginCard> with TickerProviderStateMixin {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 _buildNameField(textFieldWidth, messages, auth),
-                SizedBox(height: 20),
+                SizedBox(height: 10),
                 ExpandableContainer(
                   backgroundColor: theme.accentColor,
                   controller: _switchAuthController,
@@ -704,13 +704,13 @@ class _LoginCardState extends State<_LoginCard> with TickerProviderStateMixin {
                   color: theme.cardTheme.color,
                   width: cardWidth,
                   padding: EdgeInsets.symmetric(
-                    vertical: -1,
+                    vertical: 0,
                   ),
                   onExpandCompleted: () => {},
                   child: Column(
                     children: [
                       _buildUserNameField(textFieldWidth, messages, auth),
-                      SizedBox(height: 20),
+                      SizedBox(height: 10),
                     ],
                   ),
                 ),
