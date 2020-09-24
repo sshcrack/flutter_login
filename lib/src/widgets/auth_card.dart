@@ -28,11 +28,13 @@ class AuthCard extends StatefulWidget {
     this.passwordValidator,
     this.onSubmit,
     this.onSubmitCompleted,
+    this.usernameValidator
   }) : super(key: key);
 
   final EdgeInsets padding;
   final AnimationController loadingController;
   final FormFieldValidator<String> emailValidator;
+  final FormFieldValidator<String> usernameValidator;
   final FormFieldValidator<String> passwordValidator;
   final Function onSubmit;
   final Function onSubmitCompleted;
@@ -288,6 +290,7 @@ class AuthCardState extends State<AuthCard> with TickerProviderStateMixin {
                         : (_formLoadingController..value = 1.0),
                     emailValidator: widget.emailValidator,
                     passwordValidator: widget.passwordValidator,
+                    usernameValidator: widget.usernameValidator,
                     onSwitchRecoveryPassword: () => _switchRecovery(true),
                     onSubmitCompleted: () {
                       _forwardChangeRouteAnimation().then((_) {
@@ -330,6 +333,7 @@ class _LoginCard extends StatefulWidget {
     Key key,
     this.loadingController,
     @required this.emailValidator,
+    @required this.usernameValidator,
     @required this.passwordValidator,
     @required this.onSwitchRecoveryPassword,
     this.onSwitchAuth,
@@ -338,6 +342,7 @@ class _LoginCard extends StatefulWidget {
 
   final AnimationController loadingController;
   final FormFieldValidator<String> emailValidator;
+  final FormFieldValidator<String> usernameValidator;
   final FormFieldValidator<String> passwordValidator;
   final Function onSwitchRecoveryPassword;
   final Function onSwitchAuth;
@@ -529,13 +534,17 @@ class _LoginCardState extends State<_LoginCard> with TickerProviderStateMixin {
     return AnimatedTextFormField(
       controller: _usernameController,
       width: width,
+      enabled: auth.isSignup,
       loadingController: _loadingController,
       focusNode: _usernameFocusNode,
+      inertiaController: _postSwitchAuthController,
+      inertiaDirection: TextFieldInertiaDirection.right,
       interval: _usernameTextFieldLoadingAnimationInterval,
       labelText: messages.usernameHint,
       prefixIcon: Icon(FontAwesomeIcons.solidUserCircle),
       keyboardType: TextInputType.text,
       textInputAction: TextInputAction.next,
+      validator: widget.emailValidator,
       onFieldSubmitted: (value) {
         FocusScope.of(context).requestFocus(_passwordFocusNode);
       },
@@ -732,7 +741,7 @@ class _RecoverCard extends StatefulWidget {
   _RecoverCard({
     Key key,
     @required this.emailValidator,
-    @required this.onSwitchLogin,
+    @required this.onSwitchLogin
   }) : super(key: key);
 
   final FormFieldValidator<String> emailValidator;
