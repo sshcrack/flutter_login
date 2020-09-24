@@ -710,10 +710,10 @@ class _LoginCardState extends State<_LoginCard> with TickerProviderStateMixin {
                   child: Column(
                     children: [
                       _buildUserNameField(textFieldWidth, messages, auth),
+                      SizedBox(height: 20),
                     ],
                   ),
                 ),
-                SizedBox(height: 20),
                 _buildPasswordField(textFieldWidth, messages, auth),
               ],
             ),
