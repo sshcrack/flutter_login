@@ -543,7 +543,8 @@ class _LoginCardState extends State<_LoginCard> with TickerProviderStateMixin {
       inertiaDirection: TextFieldInertiaDirection.right,
       labelText: messages.usernameHint,
       controller: _usernameController,
-      textInputAction: TextInputAction.done,
+      textInputAction: TextInputAction.next,
+      keyboardType: TextInputType.name,
       focusNode: _usernameFocusNode,
       isTextField: true,
       icon: Icon(FontAwesomeIcons.solidUserCircle, size:20),
@@ -702,10 +703,10 @@ class _LoginCardState extends State<_LoginCard> with TickerProviderStateMixin {
                   alignment: Alignment.topLeft,
                   color: theme.cardTheme.color,
                   width: cardWidth,
-                  padding: EdgeInsets.symmetric(
+                  /*padding: EdgeInsets.symmetric(
                     vertical: 10,
-                  ),
-                  //onExpandCompleted: () => _postSwitchAuthController.forward(),
+                  ),*/
+                  onExpandCompleted: () => {},
                   child: Column(
                     children: [
                       _buildUserNameField(textFieldWidth, messages, auth),
