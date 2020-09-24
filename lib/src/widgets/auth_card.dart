@@ -20,16 +20,16 @@ import '../paddings.dart';
 import '../widget_helper.dart';
 
 class AuthCard extends StatefulWidget {
-  AuthCard({
-    Key key,
-    this.padding = const EdgeInsets.all(0),
-    this.loadingController,
-    this.emailValidator,
-    this.passwordValidator,
-    this.onSubmit,
-    this.onSubmitCompleted,
-    this.usernameValidator
-  }) : super(key: key);
+  AuthCard(
+      {Key key,
+      this.padding = const EdgeInsets.all(0),
+      this.loadingController,
+      this.emailValidator,
+      this.passwordValidator,
+      this.onSubmit,
+      this.onSubmitCompleted,
+      this.usernameValidator})
+      : super(key: key);
 
   final EdgeInsets padding;
   final AnimationController loadingController;
@@ -101,7 +101,8 @@ class AuthCardState extends State<AuthCard> with TickerProviderStateMixin {
     // replace 0 with minPositive to pass the test
     // https://github.com/flutter/flutter/issues/42527#issuecomment-575131275
     _cardOverlayHeightFactorAnimation =
-        Tween<double>(begin: double.minPositive, end: 1.0).animate(CurvedAnimation(
+        Tween<double>(begin: double.minPositive, end: 1.0)
+            .animate(CurvedAnimation(
       parent: _routeTransitionController,
       curve: Interval(.27272727, .5 /* ~250ms */, curve: Curves.linear),
     ));
@@ -388,8 +389,8 @@ class _LoginCardState extends State<_LoginCard> with TickerProviderStateMixin {
 
     final auth = Provider.of<Auth>(context, listen: false);
     _nameController = TextEditingController(text: auth.email);
-    _usernameController = TextEditingController(text: auth.username);
     _passController = TextEditingController(text: auth.password);
+    _usernameController = TextEditingController(text: auth.username);
     _confirmPassController = TextEditingController(text: auth.confirmPassword);
 
     _loadingController = widget.loadingController ??
@@ -576,19 +577,15 @@ class _LoginCardState extends State<_LoginCard> with TickerProviderStateMixin {
   }
 
   Widget _buildNoteField(double width, LoginMessages messages) {
-    if(messages.note != null) {
-      return Column(
-        children: [
-          SizedBox(height: 10),
-          messages.note
-        ]
-      );
+    if (messages.note != null) {
+      return Column(children: [SizedBox(height: 10), messages.note]);
     }
 
     return null;
   }
 
-  Widget _buildConfirmPasswordField(double width, LoginMessages messages, Auth auth) {
+  Widget _buildConfirmPasswordField(
+      double width, LoginMessages messages, Auth auth) {
     return AnimatedPasswordTextFormField(
       animatedWidth: width,
       enabled: auth.isSignup,
@@ -624,16 +621,19 @@ class _LoginCardState extends State<_LoginCard> with TickerProviderStateMixin {
           style: theme.textTheme.body1,
           textAlign: TextAlign.left,
         ),
-        onPressed: buttonEnabled ? () {
-          // save state to populate email field on recovery card
-          _formKey.currentState.save();
-          widget.onSwitchRecoveryPassword();
-        } : null,
+        onPressed: buttonEnabled
+            ? () {
+                // save state to populate email field on recovery card
+                _formKey.currentState.save();
+                widget.onSwitchRecoveryPassword();
+              }
+            : null,
       ),
     );
   }
 
-  Widget _buildSubmitButton(ThemeData theme, LoginMessages messages, Auth auth) {
+  Widget _buildSubmitButton(
+      ThemeData theme, LoginMessages messages, Auth auth) {
     return ScaleTransition(
       scale: _buttonScaleAnimation,
       child: AnimatedButton(
@@ -644,7 +644,8 @@ class _LoginCardState extends State<_LoginCard> with TickerProviderStateMixin {
     );
   }
 
-  Widget _buildSwitchAuthButton(ThemeData theme, LoginMessages messages, Auth auth) {
+  Widget _buildSwitchAuthButton(
+      ThemeData theme, LoginMessages messages, Auth auth) {
     return FadeIn(
       controller: _loadingController,
       offset: .5,
@@ -690,8 +691,6 @@ class _LoginCardState extends State<_LoginCard> with TickerProviderStateMixin {
               children: <Widget>[
                 _buildNameField(textFieldWidth, messages, auth),
                 SizedBox(height: 20),
-                _buildUserNameField(textFieldWidth, messages, auth),
-                SizedBox(height: 20),
                 _buildPasswordField(textFieldWidth, messages, auth),
               ],
             ),
@@ -710,7 +709,13 @@ class _LoginCardState extends State<_LoginCard> with TickerProviderStateMixin {
               vertical: 10,
             ),
             onExpandCompleted: () => _postSwitchAuthController.forward(),
-            child: _buildConfirmPasswordField(textFieldWidth, messages, auth),
+            child: Column(
+              children: [
+                _buildUserNameField(textFieldWidth, messages, auth),
+                SizedBox(height: 20),
+                _buildConfirmPasswordField(textFieldWidth, messages, auth)
+              ],
+            ),
           ),
           Container(
             padding: Paddings.fromRBL(cardPadding),
@@ -738,11 +743,9 @@ class _LoginCardState extends State<_LoginCard> with TickerProviderStateMixin {
 }
 
 class _RecoverCard extends StatefulWidget {
-  _RecoverCard({
-    Key key,
-    @required this.emailValidator,
-    @required this.onSwitchLogin
-  }) : super(key: key);
+  _RecoverCard(
+      {Key key, @required this.emailValidator, @required this.onSwitchLogin})
+      : super(key: key);
 
   final FormFieldValidator<String> emailValidator;
   final Function onSwitchLogin;
@@ -805,7 +808,8 @@ class _RecoverCardState extends State<_RecoverCard>
     }
   }
 
-  Widget _buildRecoverNameField(double width, LoginMessages messages, Auth auth) {
+  Widget _buildRecoverNameField(
+      double width, LoginMessages messages, Auth auth) {
     return AnimatedTextFormField(
       controller: _nameController,
       width: width,
@@ -830,10 +834,12 @@ class _RecoverCardState extends State<_RecoverCard>
   Widget _buildBackButton(ThemeData theme, LoginMessages messages) {
     return FlatButton(
       child: Text(messages.goBackButton),
-      onPressed: !_isSubmitting ? () {
-        _formRecoverKey.currentState.save();
-        widget.onSwitchLogin();
-      } : null,
+      onPressed: !_isSubmitting
+          ? () {
+              _formRecoverKey.currentState.save();
+              widget.onSwitchLogin();
+            }
+          : null,
       padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 4),
       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
       textColor: theme.primaryColor,

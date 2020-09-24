@@ -262,6 +262,7 @@ class AnimatedPasswordTextFormField extends StatefulWidget {
     this.validator,
     this.onFieldSubmitted,
     this.onSaved,
+    this.icon
   })  : assert((inertiaController == null && inertiaDirection == null) ||
             (inertiaController != null && inertiaDirection != null)),
         super(key: key);
@@ -280,6 +281,7 @@ class AnimatedPasswordTextFormField extends StatefulWidget {
   final ValueChanged<String> onFieldSubmitted;
   final FormFieldSetter<String> onSaved;
   final TextFieldInertiaDirection inertiaDirection;
+  final Icon icon;
 
   @override
   _AnimatedPasswordTextFormFieldState createState() =>
@@ -299,7 +301,7 @@ class _AnimatedPasswordTextFormFieldState
       width: widget.animatedWidth,
       enabled: widget.enabled,
       labelText: widget.labelText,
-      prefixIcon: Icon(FontAwesomeIcons.lock, size: 20),
+      prefixIcon: widget.icon == null ? Icon(FontAwesomeIcons.lock, size: 20) : widget.icon,
       suffixIcon: GestureDetector(
         onTap: () => setState(() => _obscureText = !_obscureText),
         dragStartBehavior: DragStartBehavior.down,
