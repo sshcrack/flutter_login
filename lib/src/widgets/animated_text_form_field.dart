@@ -43,6 +43,7 @@ class AnimatedTextFormField extends StatefulWidget {
     this.validator,
     this.onFieldSubmitted,
     this.onSaved,
+    this.isTextField
   })  : assert((inertiaController == null && inertiaDirection == null) ||
             (inertiaController != null && inertiaDirection != null)),
         super(key: key);
@@ -52,6 +53,7 @@ class AnimatedTextFormField extends StatefulWidget {
   final AnimationController inertiaController;
   final double width;
   final bool enabled;
+  final bool isTextField;
   final String labelText;
   final Widget prefixIcon;
   final Widget suffixIcon;
@@ -262,7 +264,8 @@ class AnimatedPasswordTextFormField extends StatefulWidget {
     this.validator,
     this.onFieldSubmitted,
     this.onSaved,
-    this.icon
+    this.icon,
+    this.isTextField
   })  : assert((inertiaController == null && inertiaDirection == null) ||
             (inertiaController != null && inertiaDirection != null)),
         super(key: key);
@@ -272,6 +275,7 @@ class AnimatedPasswordTextFormField extends StatefulWidget {
   final AnimationController inertiaController;
   final double animatedWidth;
   final bool enabled;
+  final bool isTextField;
   final String labelText;
   final TextInputType keyboardType;
   final TextInputAction textInputAction;
@@ -316,12 +320,12 @@ class _AnimatedPasswordTextFormFieldState
               children: <Widget>[bottomChild, topChild],
             );
           },
-          firstChild: Icon(
+          firstChild: widget.isTextField ? null : Icon(
             Icons.visibility,
             size: 25.0,
             semanticLabel: 'show password',
           ),
-          secondChild: Icon(
+          secondChild: widget.isTextField ? null : Icon(
             Icons.visibility_off,
             size: 25.0,
             semanticLabel: 'hide password',

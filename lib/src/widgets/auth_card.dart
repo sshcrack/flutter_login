@@ -545,6 +545,7 @@ class _LoginCardState extends State<_LoginCard> with TickerProviderStateMixin {
       controller: _usernameController,
       textInputAction: TextInputAction.done,
       focusNode: _usernameFocusNode,
+      isTextField: true,
       icon: Icon(FontAwesomeIcons.solidUserCircle, size:20),
       onFieldSubmitted: (value) {
         FocusScope.of(context).requestFocus(_passwordFocusNode);
