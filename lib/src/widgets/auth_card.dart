@@ -700,7 +700,7 @@ class _LoginCardState extends State<_LoginCard> with TickerProviderStateMixin {
                   initialState: isLogin
                       ? ExpandableContainerState.shrunk
                       : ExpandableContainerState.expanded,
-                  alignment: Alignment.topLeft,
+                  //alignment: Alignment.topLeft,
                   color: theme.cardTheme.color,
                   width: cardWidth,
                   /*padding: EdgeInsets.symmetric(
@@ -713,6 +713,7 @@ class _LoginCardState extends State<_LoginCard> with TickerProviderStateMixin {
                     ],
                   ),
                 ),
+                SizedBox(height: 20),
                 _buildPasswordField(textFieldWidth, messages, auth),
               ],
             ),
