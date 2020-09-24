@@ -309,7 +309,7 @@ class _AnimatedPasswordTextFormFieldState
       suffixIcon: GestureDetector(
         onTap: () => setState(() => _obscureText = !_obscureText),
         dragStartBehavior: DragStartBehavior.down,
-        child: widget.isTextField ? Container() : AnimatedCrossFade(
+        child: AnimatedCrossFade(
           duration: const Duration(milliseconds: 250),
           firstCurve: Curves.easeInOutSine,
           secondCurve: Curves.easeInOutSine,
