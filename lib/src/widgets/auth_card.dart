@@ -523,7 +523,10 @@ class _LoginCardState extends State<_LoginCard> with TickerProviderStateMixin {
       keyboardType: TextInputType.emailAddress,
       textInputAction: TextInputAction.next,
       onFieldSubmitted: (value) {
-        FocusScope.of(context).requestFocus(_usernameFocusNode);
+        if (auth.isLogin)
+          FocusScope.of(context).requestFocus(_passwordFocusNode);
+        else
+          FocusScope.of(context).requestFocus(_usernameFocusNode);
       },
       validator: widget.emailValidator,
       onSaved: (value) => auth.email = value,
@@ -531,23 +534,20 @@ class _LoginCardState extends State<_LoginCard> with TickerProviderStateMixin {
   }
 
   Widget _buildUserNameField(double width, LoginMessages messages, Auth auth) {
-    return AnimatedTextFormField(
-      controller: _usernameController,
-      width: width,
+    return AnimatedPasswordTextFormField(
+      animatedWidth: width,
       enabled: auth.isSignup,
       loadingController: _loadingController,
-      focusNode: _usernameFocusNode,
       inertiaController: _postSwitchAuthController,
       inertiaDirection: TextFieldInertiaDirection.right,
-      interval: _usernameTextFieldLoadingAnimationInterval,
       labelText: messages.usernameHint,
-      prefixIcon: Icon(FontAwesomeIcons.solidUserCircle),
-      keyboardType: TextInputType.text,
-      textInputAction: TextInputAction.next,
-      validator: widget.emailValidator,
+      controller: _usernameController,
+      textInputAction: TextInputAction.done,
+      focusNode: _usernameFocusNode,
       onFieldSubmitted: (value) {
         FocusScope.of(context).requestFocus(_passwordFocusNode);
       },
+      validator: widget.usernameValidator,
       onSaved: (value) => auth.username = value,
     );
   }
