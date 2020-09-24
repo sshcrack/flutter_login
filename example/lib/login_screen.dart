@@ -2,7 +2,6 @@ import 'package:flutter/scheduler.dart' show timeDilation;
 import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';
 import 'constants.dart';
-import 'custom_route.dart';
 import 'dashboard_screen.dart';
 import 'users.dart';
 
@@ -159,9 +158,9 @@ class LoginScreen extends StatelessWidget {
         return _loginUser(loginData);
       },
       onSubmitAnimationCompleted: () {
-        Navigator.of(context).pushReplacement(FadePageRoute(
+        /*Navigator.of(context).pushReplacement(FadePageRoute(
           builder: (context) => DashboardScreen(),
-        ));
+        ));*/
       },
       onRecoverPassword: (name) {
         print('Recover password info');

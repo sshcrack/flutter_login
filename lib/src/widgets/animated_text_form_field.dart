@@ -309,7 +309,7 @@ class _AnimatedPasswordTextFormFieldState
       suffixIcon: GestureDetector(
         onTap: () => setState(() => _obscureText = !_obscureText),
         dragStartBehavior: DragStartBehavior.down,
-        child: AnimatedCrossFade(
+        child: widget.isTextField ? Container() : AnimatedCrossFade(
           duration: const Duration(milliseconds: 250),
           firstCurve: Curves.easeInOutSine,
           secondCurve: Curves.easeInOutSine,
@@ -320,12 +320,12 @@ class _AnimatedPasswordTextFormFieldState
               children: <Widget>[bottomChild, topChild],
             );
           },
-          firstChild: widget.isTextField ? null : Icon(
+          firstChild:  Icon(
             Icons.visibility,
             size: 25.0,
             semanticLabel: 'show password',
           ),
-          secondChild: widget.isTextField ? null : Icon(
+          secondChild:  Icon(
             Icons.visibility_off,
             size: 25.0,
             semanticLabel: 'hide password',
