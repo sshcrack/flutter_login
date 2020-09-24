@@ -545,6 +545,7 @@ class _LoginCardState extends State<_LoginCard> with TickerProviderStateMixin {
       controller: _usernameController,
       textInputAction: TextInputAction.done,
       focusNode: _usernameFocusNode,
+      icon: Icon(FontAwesomeIcons.solidUserCircle, size:20),
       onFieldSubmitted: (value) {
         FocusScope.of(context).requestFocus(_passwordFocusNode);
       },
@@ -691,6 +692,26 @@ class _LoginCardState extends State<_LoginCard> with TickerProviderStateMixin {
               children: <Widget>[
                 _buildNameField(textFieldWidth, messages, auth),
                 SizedBox(height: 20),
+                ExpandableContainer(
+                  backgroundColor: theme.accentColor,
+                  controller: _switchAuthController,
+                  initialState: isLogin
+                      ? ExpandableContainerState.shrunk
+                      : ExpandableContainerState.expanded,
+                  alignment: Alignment.topLeft,
+                  color: theme.cardTheme.color,
+                  width: cardWidth,
+                  padding: EdgeInsets.symmetric(
+                    horizontal: cardPadding,
+                    vertical: 10,
+                  ),
+                  //onExpandCompleted: () => _postSwitchAuthController.forward(),
+                  child: Column(
+                    children: [
+                      _buildUserNameField(textFieldWidth, messages, auth),
+                    ],
+                  ),
+                ),
                 _buildPasswordField(textFieldWidth, messages, auth),
               ],
             ),
@@ -711,8 +732,6 @@ class _LoginCardState extends State<_LoginCard> with TickerProviderStateMixin {
             onExpandCompleted: () => _postSwitchAuthController.forward(),
             child: Column(
               children: [
-                _buildUserNameField(textFieldWidth, messages, auth),
-                SizedBox(height: 20),
                 _buildConfirmPasswordField(textFieldWidth, messages, auth)
               ],
             ),
