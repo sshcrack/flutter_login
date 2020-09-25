@@ -539,6 +539,7 @@ class _LoginCardState extends State<_LoginCard> with TickerProviderStateMixin {
       interval: Interval(0, 1),
       loadingController: _loadingController,
       inertiaController: _postSwitchAuthController,
+      inertiaDirection: TextFieldInertiaDirection.right,
       width: width,
       enabled: true,
       labelText: messages.usernameHint,
