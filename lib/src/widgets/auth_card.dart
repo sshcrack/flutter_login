@@ -535,19 +535,19 @@ class _LoginCardState extends State<_LoginCard> with TickerProviderStateMixin {
   }
 
   Widget _buildUserNameField(double width, LoginMessages messages, Auth auth) {
-    return AnimatedPasswordTextFormField(
-      animatedWidth: width,
-      enabled: auth.isSignup,
+    return AnimatedTextFormField(
+      interval: Interval(0, 1),
       loadingController: _loadingController,
       inertiaController: _postSwitchAuthController,
-      inertiaDirection: TextFieldInertiaDirection.right,
+      width: width,
+      enabled: true,
       labelText: messages.usernameHint,
+      prefixIcon: Icon(FontAwesomeIcons.lock, size: 20),
       controller: _usernameController,
       textInputAction: TextInputAction.next,
       keyboardType: TextInputType.name,
       focusNode: _usernameFocusNode,
       isTextField: true,
-      icon: Icon(FontAwesomeIcons.solidUserCircle, size:20),
       onFieldSubmitted: (value) {
         FocusScope.of(context).requestFocus(_passwordFocusNode);
       },
