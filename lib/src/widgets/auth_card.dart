@@ -543,7 +543,7 @@ class _LoginCardState extends State<_LoginCard> with TickerProviderStateMixin {
       width: width,
       enabled: true,
       labelText: messages.usernameHint,
-      prefixIcon: Icon(FontAwesomeIcons.lock, size: 20),
+      prefixIcon: Icon(FontAwesomeIcons.solidUserCircle, size: 20),
       controller: _usernameController,
       textInputAction: TextInputAction.next,
       keyboardType: TextInputType.name,
