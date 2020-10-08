@@ -28,7 +28,9 @@ class AuthCard extends StatefulWidget {
       this.passwordValidator,
       this.onSubmit,
       this.onSubmitCompleted,
-      this.usernameValidator})
+      this.usernameValidator,
+      this.usernameEnabled
+      })
       : super(key: key);
 
   final EdgeInsets padding;
@@ -38,6 +40,8 @@ class AuthCard extends StatefulWidget {
   final FormFieldValidator<String> passwordValidator;
   final Function onSubmit;
   final Function onSubmitCompleted;
+
+  final bool usernameEnabled;
 
   @override
   AuthCardState createState() => AuthCardState();
@@ -292,6 +296,7 @@ class AuthCardState extends State<AuthCard> with TickerProviderStateMixin {
                     emailValidator: widget.emailValidator,
                     passwordValidator: widget.passwordValidator,
                     usernameValidator: widget.usernameValidator,
+                    usernameEnabled: widget.usernameEnabled,
                     onSwitchRecoveryPassword: () => _switchRecovery(true),
                     onSubmitCompleted: () {
                       _forwardChangeRouteAnimation().then((_) {
@@ -335,6 +340,7 @@ class _LoginCard extends StatefulWidget {
     this.loadingController,
     @required this.emailValidator,
     @required this.usernameValidator,
+    @required this.usernameEnabled,
     @required this.passwordValidator,
     @required this.onSwitchRecoveryPassword,
     this.onSwitchAuth,
@@ -348,6 +354,7 @@ class _LoginCard extends StatefulWidget {
   final Function onSwitchRecoveryPassword;
   final Function onSwitchAuth;
   final Function onSubmitCompleted;
+  final bool usernameEnabled;
 
   @override
   _LoginCardState createState() => _LoginCardState();
@@ -695,7 +702,7 @@ class _LoginCardState extends State<_LoginCard> with TickerProviderStateMixin {
               children: <Widget>[
                 _buildNameField(textFieldWidth, messages, auth),
                 SizedBox(height: 10),
-                ExpandableContainer(
+                widget.usernameEnabled ? ExpandableContainer(
                   backgroundColor: theme.accentColor,
                   controller: _switchAuthController,
                   initialState: isLogin
@@ -714,7 +721,7 @@ class _LoginCardState extends State<_LoginCard> with TickerProviderStateMixin {
                       SizedBox(height: 10),
                     ],
                   ),
-                ),
+                ) : SizedBox(),
                 _buildPasswordField(textFieldWidth, messages, auth),
               ],
             ),

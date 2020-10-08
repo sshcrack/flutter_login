@@ -214,10 +214,12 @@ class FlutterLogin extends StatefulWidget {
     this.theme,
     this.emailValidator,
     this.passwordValidator,
+    this.usernameValidator,
+    this.usernameEnabled,
     this.onSubmitAnimationCompleted,
     this.logoTag,
     this.titleTag,
-    this.showDebugButtons = false,
+    this.showDebugButtons = false
   }) : super(key: key);
 
   /// Called when the user hit the submit button when in sign up mode
@@ -268,6 +270,12 @@ class FlutterLogin extends StatefulWidget {
   /// release mode, this will be overrided to false regardless of the value
   /// passed in
   final bool showDebugButtons;
+
+  // Enable / Disable the Username Field
+  final bool usernameEnabled;
+
+  //Username Validator
+  final FormFieldValidator<String> usernameValidator;
 
   static final FormFieldValidator<String> defaultEmailValidator = (value) {
     if (value.isEmpty || !Regex.email.hasMatch(value)) {
@@ -581,6 +589,8 @@ class _FlutterLoginState extends State<FlutterLogin>
                         passwordValidator: passwordValidator,
                         onSubmit: _reverseHeaderAnimation,
                         onSubmitCompleted: widget.onSubmitAnimationCompleted,
+                        usernameValidator: widget.usernameValidator,
+                        usernameEnabled: widget.usernameEnabled
                       ),
                     ),
                     Positioned(
